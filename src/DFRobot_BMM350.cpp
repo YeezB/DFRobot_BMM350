@@ -265,10 +265,9 @@ String DFRobot_BMM350::getMeasurementStateXYZ(void)
 }
 
 sBmm350MagData_t DFRobot_BMM350::getGeomagneticData(void)
-<<<<<<< HEAD
 {   //hard iron calibration parameters
     const float hard_iron[3] = {-13.45, -28.95, 12.69};
-    //soft iron calibration parameters
+    //oft iron calibration parameters
     const float soft_iron[3][3] = {
         {0.992, -0.006, -0.007},
         {-0.006, 0.990, -0.004},
@@ -298,21 +297,6 @@ sBmm350MagData_t DFRobot_BMM350::getGeomagneticData(void)
     magData.float_x = mag_data[0];
     magData.float_y = mag_data[1];
     magData.float_z = mag_data[2];
-=======
-{   
-    sBmm350MagData_t magData;
-    struct sBmm350MagTempData_t magTempData;
-    memset(&magData, 0, sizeof(magData));
-    memset(&magTempData, 0, sizeof(magTempData));
-    bmm350GetCompensatedMagXYZTempData(&magTempData, &bmm350Sensor);
-    magData.x = magTempData.x;
-    magData.y = magTempData.y;
-    magData.z = magTempData.z;
-    magData.temperature = magTempData.temperature;
-    magData.float_x = magTempData.x;
-    magData.float_y = magTempData.y;
-    magData.float_z = magTempData.z;
->>>>>>> 85e6aabab8411a8bedf517bf7361f262fa47b7a5
     magData.float_temperature = magTempData.temperature;
     return magData;
 }
