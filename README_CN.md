@@ -9,7 +9,9 @@ BMM350 是一款低功耗、低噪声的 3 轴数字地磁传感器，完全符�
 
 ## 产品链接（[https://www.dfrobot.com.cn](https://www.dfrobot.com.cn)）
 
-    SKU: 
+```yaml
+SKU: SEN0619
+```
 
 ## 目录
 
