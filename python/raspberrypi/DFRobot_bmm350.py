@@ -1393,6 +1393,7 @@ class DFRobot_bmm350(object):
     _mag_data.temperature = out_data[3]
 
     geomagnetic = [None] * 3
+<<<<<<< HEAD
     
     _magData[3]=[0,0,0]
     
@@ -1412,6 +1413,11 @@ class DFRobot_bmm350(object):
     geomagnetic[1] = _magData[1]
     geomagnetic[2] = _magData[2]
     
+=======
+    geomagnetic[0] = _mag_data.x
+    geomagnetic[1] = _mag_data.y
+    geomagnetic[2] = _mag_data.z
+>>>>>>> 85e6aabab8411a8bedf517bf7361f262fa47b7a5
     return geomagnetic
 
 

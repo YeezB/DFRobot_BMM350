@@ -4,12 +4,20 @@
 
 The BMM350 is a low-power and low noise 3-axis digital geomagnetic sensor that perfectly matches the requirements of compass applications. Based on Bosch’s proprietary FlipCore technology, the BMM350 provides absolute spatial orientation and motion vectors with high accuracy and dynamics. Featuring small size and lightweight, it is also especially suited for supporting drones in accurate heading. The BMM350 can also be used together with an inertial measurement unit consisting of a 3-axis accelerometer and a 3-axis gyroscope.
 
+<<<<<<< HEAD
 ![产品效果图](./resources/images/BMM350.png)![产品效果图](./resources/images/BMM350Size.png)
 
 ## Product Link（[https://www.dfrobot.com](https://www.dfrobot.com)）
 
     SKU：
 
+=======
+![产品效果图](./resources/images/)![产品效果图](./resources/images/)
+
+## Product Link（[https://www.dfrobot.com](https://www.dfrobot.com)）
+    SKU：
+    
+>>>>>>> 85e6aabab8411a8bedf517bf7361f262fa47b7a5
 ## Table of Contents
 
 * [Summary](#summary)
@@ -19,6 +27,10 @@ The BMM350 is a low-power and low noise 3-axis digital geomagnetic sensor that p
 * [History](#history)
 * [Credits](#credits)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 85e6aabab8411a8bedf517bf7361f262fa47b7a5
 ## Summary
 
 Get geomagnetic data along the XYZ axis.
@@ -103,7 +115,11 @@ Download the zip file first to use this library and uncompress it to a folder na
    * @return result The returned character string is the self test result
    */
   String selfTest(eBmm350SelfTest_t testMode = eBmm350SelfTestNormal);
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 85e6aabab8411a8bedf517bf7361f262fa47b7a5
   /**
    * @fn setMeasurementXYZ
    * @brief Enable the measurement at x-axis, y-axis and z-axis, default to be enabled. After disabling, the geomagnetic data at x, y, and z axis are wrong.
@@ -191,6 +207,7 @@ Download the zip file first to use this library and uncompress it to a folder na
    * @n interrupt_x、interrupt_y、interrupt_z store the xyz axis interrupt state
    */
   sBmm350ThresholdData_t getThresholdData(void);
+<<<<<<< HEAD
 ```
 
 ## Compatibility
@@ -204,6 +221,22 @@ Download the zip file first to use this library and uncompress it to a folder na
 | Leonardo           | √         |            |          |         |
 | Microbit           | √         |            |          |         |
 | Arduino MEGA2560   | √         |            |          |         |
+=======
+
+
+```
+## Compatibility
+
+| MCU                | Work Well | Work Wrong | Untested | Remarks |
+| ------------------ | :-------: | :--------: | :------: | ------- |
+| Arduino uno        |     √     |            |          |         |
+| FireBeetle esp32   |     √     |            |          |         |
+| FireBeetle esp8266 |     √     |            |          |         |
+| FireBeetle m0      |     √     |            |          |         |
+| Leonardo           |     √     |            |          |         |
+| Microbit           |     √     |            |          |         |
+| Arduino MEGA2560   |     √     |            |          |         |
+>>>>>>> 85e6aabab8411a8bedf517bf7361f262fa47b7a5
 
 ## History
 
