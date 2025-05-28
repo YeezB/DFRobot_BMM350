@@ -1,9 +1,11 @@
 # 使用 MotionCal 校准磁场数据指南
+
 * [English Version](./README.md)
 
 磁力计在现实应用中易受金属物体、电流干扰和地磁场波动的影响。未经校准的数据可能会导致方向识别偏移，影响航向角（yaw）或电子罗盘功能的准确性。
 
 ---
+
 ## 所需工具
 
 * [MotionCal](https://www.pjrc.com/store/prop_shield.html#motioncal) 工具（支持 Windows/macOS/Linux）
@@ -17,25 +19,6 @@
 DFRobot_BMM350传感器器所支持的开发板，并将串口正确连接到PC
 
 ```cpp
-/*!
-  * @file  getGeomagneticData.ino
-  * @brief Get the calibration data 
-  * @n "Compass Degree", the angle formed when the needle rotates counterclockwise from the current position to the true north
-  * @n Experimental phenomenon: serial print the geomagnetic data of x-axis, y-axis and z-axis and the compass degree
-  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
-  * @license     The MIT License (MIT)
-  * @author      [GDuang](yonglei.ren@dfrobot.com)
-  * @version     V1.0.0
-  * @date        2024-05-06
-  * @url       https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
-  */
-
-//  =======================================================
-//   请先阅读项目 https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
-//   Please read https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
-//   包含使用说明、校准步骤。
-//   It contains usage instructions, calibration steps.
-// =======================================================
 #include "DFRobot_BMM350.h"
 
 DFRobot_BMM350_I2C bmm350(&Wire, I2C_ADDRESS);
@@ -100,8 +83,6 @@ void loop() {
     Serial.println();
   delay(100);
 }
-
-
 ```
 
 ---
@@ -119,7 +100,8 @@ void loop() {
 
 4. MotionCal 自动开始自动接收并可视化磁力计、加速度计和陀螺仪数据。
 
->确保没有其它串口软件同时打开!!
+> 确保没有其它串口软件同时打开!!
+
 ---
 
 ## 步骤三：旋转传感器进行全向采样
@@ -134,6 +116,7 @@ void loop() {
 
 MotionCal软件左上角即为所需的校正参数
 分别将校正系数填入参考代码`CalibrateMagnedticData.ino`,对应位置
+
 ```cpp
 //hard iron calibration parameters
 const float hard_iron[3] = { -13.45, -28.95, 12.69 };
@@ -143,34 +126,11 @@ const float soft_iron[3][3] = {
   { -0.006, 0.990, -0.004 },
   { -0.007, -0.004, 1.019 }
 };
-
 ```
 
 完整参考代码如下：
 
-
-
 ```cpp
-/*!
-  * @file  CalibratedMagnedticData.ino
-  * @brief Get the  Calibrated geomagnetic data at 3 axis (x, y, z), get the compass degree
-  * @n "Compass Degree", the angle formed when the needle rotates counterclockwise from the current position to the true north
-  * @n Experimental phenomenon: serial print the geomagnetic data of x-axis, y-axis and z-axis and the compass degree
-  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
-  * @license     The MIT License (MIT)
-  * @author      [GDuang](yonglei.ren@dfrobot.com)
-  * @version     V1.0.0
-  * @date        2024-05-06
-  * @url         https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
-  */
- 
-// =======================================================
-//   请先阅读项目 https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
-//   Please read https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
-//   包含使用说明、校准步骤。
-//   It contains usage instructions, calibration steps.
-// =======================================================
-
 #include "DFRobot_BMM350.h"
 
 DFRobot_BMM350_I2C bmm350(&Wire, I2C_ADDRESS);
@@ -270,8 +230,6 @@ float getCompassDegree(sBmm350MagData_t magData)
     }
     return compass * 180 / M_PI;
 }
-
-
 ```
 
 ---
