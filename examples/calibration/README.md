@@ -1,5 +1,5 @@
 # Guide to Calibrating BMM350 Magnetic Field Data Using MotionCal
-* [中文版本](./README.md)
+* [中文版本](./README_CN.md)
 
 Magnetometers in real-world applications are susceptible to interference from metal objects, electrical currents, and fluctuations in the Earth's magnetic field. Uncalibrated data can lead to deviations in direction recognition, affecting the accuracy of the heading angle (yaw) or the functionality of the electronic compass.
 
