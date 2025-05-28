@@ -59,11 +59,6 @@ def setup():
         BMM350_PRESETMODE_REGULAR        Regular mode, get a number of data and draw the mean value.
         BMM350_PRESETMODE_ENHANCED       Enhanced mode, get a large number of data and draw the mean value.
         BMM350_PRESETMODE_HIGHACCURACY   High accuracy mode, get a huge number of data and draw the mean value.
-  '''
-  bmm350.set_preset_mode(BMM350_PRESETMODE_HIGHACCURACY)
-
-  '''
-    Set the rate of obtaining geomagnetic data, the higher, the faster (without delay function)
       rate:
         BMM350_DATA_RATE_1_5625HZ
         BMM350_DATA_RATE_3_125HZ
@@ -75,7 +70,7 @@ def setup():
         BMM350_DATA_RATE_200HZ
         BMM350_DATA_RATE_400HZ
   '''
-  bmm350.set_rate(BMM350_DATA_RATE_25HZ)
+  bmm350.set_preset_mode(BMM350_PRESETMODE_HIGHACCURACY,BMM350_DATA_RATE_25HZ)
   
   '''
     Enable the measurement at x-axis, y-axis and z-axis, default to be enabled, no config required. When disabled, the geomagnetic data at x, y, and z will be inaccurate.

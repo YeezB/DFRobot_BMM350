@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 '''
-  @file demo_get_geomagnetic_data.py
+  @file get_calibrated_geomagnetic_data.py
   @brief Get the geomagnetic data at 3 axis (x, y, z), get the compass degree
   @n "Compass Degree", the angle formed when the needle rotates counterclockwise from the current position to the true north
   @n Experimental phenomenon: serial print the geomagnetic data at x-axis, y-axis and z-axis and the angle formed when the needle rotates counterclockwise from the current position to the true north
@@ -13,13 +13,13 @@
 '''
 import sys
 import os
-
+import math
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from DFRobot_bmm350 import *
 
 '''
   If you want to use I2C to drive this module, uncomment the codes below, and connect the module with Raspberry Pi via I2C port
-  Connect to VCC, GND, SCL, SDA pin
+  Connect to VCC,GND，SCL,SDA pin
 '''
 I2C_BUS         = 0x01   #default use I2C1
 bmm350 = DFRobot_bmm350_I2C(I2C_BUS, 0x14)
@@ -59,7 +59,8 @@ def setup():
         BMM350_DATA_RATE_400HZ
   '''
   bmm350.set_preset_mode(BMM350_PRESETMODE_HIGHACCURACY,BMM350_DATA_RATE_25HZ)
-
+  
+  
   '''
     Enable the measurement at x-axis, y-axis and z-axis, default to be enabled, no config required. When disabled, the geomagnetic data at x, y, and z will be inaccurate.
     Refer to readme file if you want to configure more parameters.
@@ -68,17 +69,34 @@ def setup():
   
 def loop():
   geomagnetic = bmm350.get_geomagnetic_data()
-  print("mag x = %d ut"%geomagnetic[0])
-  print("mag y = %d ut"%geomagnetic[1])
-  print("mag z = %d ut"%geomagnetic[2])
-  
-  # get float type data
-  # geomagnetic = bmm350.get_geomagnetic_data()
-  # print("---------------------------------")
-  # print("mag x = %.2f ut"%geomagnetic[0])
-  # print("mag y = %.2f ut"%geomagnetic[1])
-  # print("mag z = %.2f ut"%geomagnetic[2])
-  degree = bmm350.get_compass_degree()
+  #hard iron calibration parameters
+  hard_iron= (-13.45, -28.95, 12.69 )
+  #soft iron calibration parameters
+  soft_iron= [
+  ( 0.992, -0.006, -0.007 ),
+  ( -0.006, 0.990, -0.004 ),
+  ( -0.007, -0.004, 1.019 )
+  ]
+
+  # hard iron calibration
+  geomagnetic[0] =geomagnetic[0] + hard_iron[0]
+  geomagnetic[1] =geomagnetic[1] + hard_iron[1]
+  geomagnetic[2] = geomagnetic[2] + hard_iron[2]
+
+  #soft iron calibration
+  for i in range(3):
+    geomagnetic[i] = (soft_iron[i][0] * geomagnetic[0]) + (soft_iron[i][1] * geomagnetic[1]) + (soft_iron[i][2] * geomagnetic[2])
+    
+  compass = math.atan2(geomagnetic[0], geomagnetic[1])
+  if compass < 0:
+    compass += 2 * PI
+  if compass > 2 * PI:
+    compass -= 2 * PI
+  degree=compass * 180 / M_PI
+  print("---------------------------------")
+  print("mag x = %.2f ut"%geomagnetic[0])
+  print("mag y = %.2f ut"%geomagnetic[1])
+  print("mag z = %.2f ut"%geomagnetic[2])
   print("---------------------------------")
   print("the angle between the pointing direction and north (counterclockwise) is: %.2f "%degree) 
   time.sleep(1)

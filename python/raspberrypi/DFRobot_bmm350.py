@@ -1147,28 +1147,7 @@ class DFRobot_bmm350(object):
     return result
 
 
-  def set_rate(self, rates):
-    '''!
-      @brief Set the rate of obtaining geomagnetic data, the higher, the faster (without delay function)
-      @param rate
-      @n BMM350_DATA_RATE_1_5625HZ
-      @n BMM350_DATA_RATE_3_125HZ
-      @n BMM350_DATA_RATE_6_25HZ
-      @n BMM350_DATA_RATE_12_5HZ  (default rate)
-      @n BMM350_DATA_RATE_25HZ
-      @n BMM350_DATA_RATE_50HZ
-      @n BMM350_DATA_RATE_100HZ
-      @n BMM350_DATA_RATE_200HZ
-      @n BMM350_DATA_RATE_400HZ
-    '''
-    # self.bmm350_set_powermode(BMM350_NORMAL_MODE)
-    avg_odr_reg = self.read_reg(BMM350_REG_PMU_CMD_AGGR_SET, 1)
-    avg_reg = self.BMM350_GET_BITS(avg_odr_reg[0], BMM350_AVG_MSK, BMM350_AVG_POS)
-    reg_data = (rates & BMM350_ODR_MSK)
-    reg_data = self.BMM350_SET_BITS(reg_data, BMM350_AVG_MSK, BMM350_AVG_POS, avg_reg)
-    self.write_reg(BMM350_REG_PMU_CMD_AGGR_SET, reg_data)
-    self.write_reg(BMM350_REG_PMU_CMD, BMM350_PMU_CMD_UPD_OAE)
-    time.sleep(BMM350_UPD_OAE_DELAY)
+
 
 
   def get_rate(self):
@@ -1199,7 +1178,7 @@ class DFRobot_bmm350(object):
     return result
 
 
-  def set_preset_mode(self, avg, odr = BMM350_DATA_RATE_12_5HZ):
+  def set_preset_mode(self, avg, rate = BMM350_DATA_RATE_12_5HZ):
     '''!
       @brief Set preset mode, make it easier for users to configure sensor to get geomagnetic data (The default rate for obtaining geomagnetic data is 12.5Hz)
       @param modes 
@@ -1207,9 +1186,19 @@ class DFRobot_bmm350(object):
       @n BMM350_PRESETMODE_REGULAR        Regular mode, get a number of data and take the mean value.
       @n BMM350_PRESETMODE_ENHANCED       Enhanced mode, get a plenty of data and take the mean value.
       @n BMM350_PRESETMODE_HIGHACCURACY   High accuracy mode, get a huge number of data and take the mean value.
+      @param rate
+      @n BMM350_DATA_RATE_1_5625HZ
+      @n BMM350_DATA_RATE_3_125HZ
+      @n BMM350_DATA_RATE_6_25HZ
+      @n BMM350_DATA_RATE_12_5HZ  (default rate)
+      @n BMM350_DATA_RATE_25HZ
+      @n BMM350_DATA_RATE_50HZ
+      @n BMM350_DATA_RATE_100HZ
+      @n BMM350_DATA_RATE_200HZ
+      @n BMM350_DATA_RATE_400HZ
 
     '''
-    reg_data = (odr & BMM350_ODR_MSK)
+    reg_data = (rate & BMM350_ODR_MSK)
     reg_data = self.BMM350_SET_BITS(reg_data, BMM350_AVG_MSK, BMM350_AVG_POS, avg)
     self.write_reg(BMM350_REG_PMU_CMD_AGGR_SET, reg_data)
     self.write_reg(BMM350_REG_PMU_CMD, BMM350_PMU_CMD_UPD_OAE)  
@@ -1393,25 +1382,9 @@ class DFRobot_bmm350(object):
     _mag_data.temperature = out_data[3]
 
     geomagnetic = [None] * 3
-    
-    _magData[3]=[0,0,0]
-    
-    #calibration parameters
-    _hard_iron[3] = [-13.45, -28.95, 12.69]
-    _soft_iron[3][3] = [[0.992, -0.006, -0.007],[-0.006, 0.990, -0.004],[-0.006, 0.990, -0.004]]
-    
-    #Apply hard iron calibration
-    _magData[0]=_mag_data.x+_hard_iron[0]
-    _magData[1]=_mag_data.x+_hard_iron[1]
-    _magData[2]=_mag_data.x+_hard_iron[2]
-    #// Apply soft iron calibration
-    for i in range(3):
-      _magData[i] = (soft_iron[i][0] * _magData[0]) + (soft_iron[i][1] * _magData[1]) + (soft_iron[i][2] * _magData[2])
-    
-    geomagnetic[0] = _magData[0]
-    geomagnetic[1] = _magData[1]
-    geomagnetic[2] = _magData[2]
-    
+    geomagnetic[0] = _mag_data.x
+    geomagnetic[1] = _mag_data.y
+    geomagnetic[2] = _mag_data.z
     return geomagnetic
 
 

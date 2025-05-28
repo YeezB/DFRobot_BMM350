@@ -73,22 +73,6 @@ SKU: SEN0619
   void setPresetMode(uint8_t presetMode, uint8_t rate = BMM350_DATA_RATE_12_5HZ);
 
   /**
-   * @fn setRate
-   * @brief 设置获取地磁数据的速率,速率越大获取越快(不加延时函数)
-   * @param rate
-   * @n BMM350_DATA_RATE_1_5625HZ
-   * @n BMM350_DATA_RATE_3_125HZ
-   * @n BMM350_DATA_RATE_6_25HZ
-   * @n BMM350_DATA_RATE_12_5HZ  (默认速率)
-   * @n BMM350_DATA_RATE_25HZ
-   * @n BMM350_DATA_RATE_50HZ
-   * @n BMM350_DATA_RATE_100HZ
-   * @n BMM350_DATA_RATE_200HZ
-   * @n BMM350_DATA_RATE_400HZ
-   */
-  void setRate(uint8_t rate);
-
-  /**
    * @fn getRate
    * @brief 获取配置的数据速率 单位：HZ
    * @return rate

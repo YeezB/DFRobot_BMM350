@@ -1,6 +1,6 @@
- /*!
+/*!
   * @file  getGeomagneticData.ino
-  * @brief Get the geomagnetic data at 3 axis (x, y, z), get the compass degree
+  * @brief Get the calibration data 
   * @n "Compass Degree", the angle formed when the needle rotates counterclockwise from the current position to the true north
   * @n Experimental phenomenon: serial print the geomagnetic data of x-axis, y-axis and z-axis and the compass degree
   * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
@@ -8,22 +8,27 @@
   * @author      [GDuang](yonglei.ren@dfrobot.com)
   * @version     V1.0.0
   * @date        2024-05-06
-  * @url         https://github.com/DFRobot/DFRobot_BMM350
+  * @url       https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
   */
- 
+
+//  =======================================================
+//   请先阅读项目 https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
+//   Please read https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
+//   包含使用说明、校准步骤。
+//   It contains usage instructions, calibration steps.
+// =======================================================
 #include "DFRobot_BMM350.h"
 
-
 DFRobot_BMM350_I2C bmm350(&Wire, I2C_ADDRESS);
-
-void setup() 
-{
+void setup() {
   Serial.begin(115200);
-  while(!Serial);
-  while(bmm350.begin()){
+  while (!Serial)
+    ;
+  while (bmm350.begin()) {
     Serial.println("bmm350 init failed, Please try again!");
     delay(1000);
-  } Serial.println("bmm350 init success!");
+  }
+  Serial.println("bmm350 init success!");
 
   /**
    * Set sensor operation mode
@@ -43,19 +48,8 @@ void setup()
    *   BMM350_PRESETMODE_REGULAR       // Regular mode, get a number of data and take the mean value.
    *   BMM350_PRESETMODE_ENHANCED      // Enhanced mode, get a plenty of data and take the mean value.
    *   BMM350_PRESETMODE_HIGHACCURACY  // High accuracy mode, get a huge number of take and draw the mean value.
-   * rate:
-   *   BMM350_DATA_RATE_1_5625HZ
-   *   BMM350_DATA_RATE_3_125HZ
-   *   BMM350_DATA_RATE_6_25HZ
-   *   BMM350_DATA_RATE_12_5HZ   (default rate)
-   *   BMM350_DATA_RATE_25HZ
-   *   BMM350_DATA_RATE_50HZ
-   *   BMM350_DATA_RATE_100HZ
-   *   BMM350_DATA_RATE_200HZ
-   *   BMM350_DATA_RATE_400HZ
    */
   bmm350.setPresetMode(BMM350_PRESETMODE_HIGHACCURACY,BMM350_DATA_RATE_25HZ);
-
 
   /**
    * Enable the measurement at x-axis, y-axis and z-axis, default to be enabled, no config required, the geomagnetic data at x, y and z will be inaccurate when disabled.
@@ -64,21 +58,26 @@ void setup()
   bmm350.setMeasurementXYZ();
 }
 
-void loop()
-{
+void loop() {
   sBmm350MagData_t magData = bmm350.getGeomagneticData();
-  Serial.print("mag x = "); Serial.print(magData.x); Serial.println(" uT");
-  Serial.print("mag y = "); Serial.print(magData.y); Serial.println(" uT");
-  Serial.print("mag z = "); Serial.print(magData.z); Serial.println(" uT");
-
-  // float type data
-  //Serial.print("mag x = "); Serial.print(magData.float_x); Serial.println(" uT");
-  //Serial.print("mag y = "); Serial.print(magData.float_y); Serial.println(" uT");
-  //Serial.print("mag z = "); Serial.print(magData.float_z); Serial.println(" uT");
-
-  float compassDegree = bmm350.getCompassDegree();
-  Serial.print("the angle between the pointing direction and north (counterclockwise) is:");
-  Serial.println(compassDegree);
-  Serial.println("--------------------------------");
-  delay(3000);
+    Serial.print("Raw:");
+    Serial.print(0);
+    Serial.print(',');
+    Serial.print(0);
+    Serial.print(',');
+    Serial.print(0);
+    Serial.print(',');
+    Serial.print(0);
+    Serial.print(',');
+    Serial.print(0);
+    Serial.print(',');
+    Serial.print(0);
+    Serial.print(',');
+    Serial.print(magData.x*10);
+    Serial.print(',');
+    Serial.print(magData.y*10);
+    Serial.print(',');
+    Serial.print(magData.z*10);
+    Serial.println();
+  delay(100);
 }
