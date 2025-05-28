@@ -8,7 +8,7 @@
   * @author      [GDuang](yonglei.ren@dfrobot.com)
   * @version     V1.0.0
   * @date        2024-05-06
-  * @url       https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
+  * @url       https://github.com/DFRobot/DFRobot_BMM350/
   */
 
 //  =======================================================
