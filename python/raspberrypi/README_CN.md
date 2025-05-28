@@ -61,7 +61,7 @@ python3 data_ready_interrupt.py
   def self_test(self):
 
   '''!
-    @brief 设置传感器的执行模式和地磁数据获取的速率，速率越大获取越快(不加延时函数)
+    @brief 设置传感器的执行模式
     @param modes
     @n     BMM350_SUSPEND_MODE      挂起模式: 挂起模式是芯片上电后BMM350的默认电源模式，在挂起模式下电流消耗最小，因此，这种模式在不需要进行数据转换时非常有用。所有寄存器的读写是可能的
     @n     BMM350_NORMAL_MODE       普通模式: 正常获取地磁数据
@@ -77,18 +77,7 @@ python3 data_ready_interrupt.py
   def get_operation_mode(self):
 
   '''!
-    @brief 获取配置的数据速率 单位：HZ
-    @return rate
-  '''
-  def get_rate(self):
-
-  '''!
-    @brief 设置预置模式，使用户更简单的配置传感器来获取地磁数据和地磁数据获取的速率，速率越大获取 (默认的采集速率为12.5Hz)
-    @param modes 
-    @n     BMM350_PRESETMODE_LOWPOWER       低功率模式,获取少量的数据 取均值
-    @n     BMM350_PRESETMODE_REGULAR        普通模式,获取中量数据 取均值
-    @n     BMM350_PRESETMODE_ENHANCED       增强模式,获取大量数据 取均值
-    @n     BMM350_PRESETMODE_HIGHACCURACY   高精度模式,获取超大量数据 取均值
+    @brief 设置地磁数据获取的速率，速率越大获取越快(不加延时函数)
     @param rate
     @n BMM350_DATA_RATE_1_5625HZ
     @n BMM350_DATA_RATE_3_125HZ
@@ -100,7 +89,23 @@ python3 data_ready_interrupt.py
     @n BMM350_DATA_RATE_200HZ
     @n BMM350_DATA_RATE_400HZ
   '''
-  def set_preset_mode(self, modes,rates):
+  def set_rate(self, rates):
+
+  '''!
+    @brief 获取配置的数据速率 单位：HZ
+    @return rate
+  '''
+  def get_rate(self):
+
+  '''!
+    @brief 设置预置模式，使用户更简单的配置传感器来获取地磁数据 (默认的采集速率为12.5Hz)
+    @param modes 
+    @n     BMM350_PRESETMODE_LOWPOWER       低功率模式,获取少量的数据 取均值
+    @n     BMM350_PRESETMODE_REGULAR        普通模式,获取中量数据 取均值
+    @n     BMM350_PRESETMODE_ENHANCED       增强模式,获取大量数据 取均值
+    @n     BMM350_PRESETMODE_HIGHACCURACY   高精度模式,获取超大量数据 取均值
+  '''
+  def set_preset_mode(self, modes):
 
   '''!
     @brief 使能x y z 轴的测量，默认设置为使能不需要配置，禁止后xyz轴的地磁数据不准确

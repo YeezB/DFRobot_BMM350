@@ -1203,7 +1203,29 @@ class DFRobot_bmm350(object):
     self.write_reg(BMM350_REG_PMU_CMD_AGGR_SET, reg_data)
     self.write_reg(BMM350_REG_PMU_CMD, BMM350_PMU_CMD_UPD_OAE)  
 
-
+  def set_rate(self, rates):
+    '''!
+      @brief Set the rate of obtaining geomagnetic data, the higher, the faster (without delay function)
+      @param rate
+      @n BMM350_DATA_RATE_1_5625HZ
+      @n BMM350_DATA_RATE_3_125HZ
+      @n BMM350_DATA_RATE_6_25HZ
+      @n BMM350_DATA_RATE_12_5HZ  (default rate)
+      @n BMM350_DATA_RATE_25HZ
+      @n BMM350_DATA_RATE_50HZ
+      @n BMM350_DATA_RATE_100HZ
+      @n BMM350_DATA_RATE_200HZ
+      @n BMM350_DATA_RATE_400HZ
+    '''
+    # self.bmm350_set_powermode(BMM350_NORMAL_MODE)
+    avg_odr_reg = self.read_reg(BMM350_REG_PMU_CMD_AGGR_SET, 1)
+    avg_reg = self.BMM350_GET_BITS(avg_odr_reg[0], BMM350_AVG_MSK, BMM350_AVG_POS)
+    reg_data = (rates & BMM350_ODR_MSK)
+    reg_data = self.BMM350_SET_BITS(reg_data, BMM350_AVG_MSK, BMM350_AVG_POS, avg_reg)
+    self.write_reg(BMM350_REG_PMU_CMD_AGGR_SET, reg_data)
+    self.write_reg(BMM350_REG_PMU_CMD, BMM350_PMU_CMD_UPD_OAE)
+    time.sleep(BMM350_UPD_OAE_DELAY)
+    
   def self_test(self):
     '''!
       @brief Sensor self test, the returned character string indicate the self test result.

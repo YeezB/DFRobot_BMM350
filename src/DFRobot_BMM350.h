@@ -94,7 +94,22 @@ public:
    * @n BMM350_DATA_RATE_200HZ
    * @n BMM350_DATA_RATE_400HZ
    */
-  void setPresetMode(uint8_t presetMode, enum eBmm350DataRates_t rate);
+  void setPresetMode(uint8_t presetMode, enum eBmm350DataRates_t rate=BMM350_DATA_RATE_12_5HZ);
+  /**
+   * @fn setRate
+   * @brief Set the rate of obtaining geomagnetic data, the higher, the faster (without delay function)
+   * @param rate
+   * @n BMM350_DATA_RATE_1_5625HZ
+   * @n BMM350_DATA_RATE_3_125HZ
+   * @n BMM350_DATA_RATE_6_25HZ
+   * @n BMM350_DATA_RATE_12_5HZ  (default rate)
+   * @n BMM350_DATA_RATE_25HZ
+   * @n BMM350_DATA_RATE_50HZ
+   * @n BMM350_DATA_RATE_100HZ
+   * @n BMM350_DATA_RATE_200HZ
+   * @n BMM350_DATA_RATE_400HZ
+   */
+  void setRate(uint8_t rate);
 
   /**
    * @fn getRate

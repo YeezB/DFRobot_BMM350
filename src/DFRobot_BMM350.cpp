@@ -116,6 +116,51 @@ void DFRobot_BMM350::setPresetMode(uint8_t presetMode, enum eBmm350DataRates_t r
         break;
     }
 }
+void DFRobot_BMM350::setRate(uint8_t rate)
+{
+    /* Variable to store the function result */
+    int8_t rslt;
+
+    uint8_t avgOdrReg = 0;
+    uint8_t avgReg = 0;
+    uint8_t regData = 0;
+
+    switch(rate){
+        case BMM350_DATA_RATE_1_5625HZ:
+        case BMM350_DATA_RATE_3_125HZ:
+        case BMM350_DATA_RATE_6_25HZ:
+        case BMM350_DATA_RATE_12_5HZ:
+        case BMM350_DATA_RATE_25HZ:
+        case BMM350_DATA_RATE_50HZ:
+        case BMM350_DATA_RATE_100HZ:
+        case BMM350_DATA_RATE_200HZ:
+        case BMM350_DATA_RATE_400HZ:
+            /* Get the configurations for ODR and performance */
+            rslt = bmm350GetRegs(BMM350_REG_PMU_CMD_AGGR_SET, &avgOdrReg, 1, &bmm350Sensor);
+            if (rslt == BMM350_OK){
+                /* Read the performance status */
+                avgReg = BMM350_GET_BITS(avgOdrReg, BMM350_AVG);
+            }
+            /* ODR is an enum taking the generated constants from the register map */
+            regData = ((uint8_t)rate & BMM350_ODR_MSK);
+            /* AVG / performance is an enum taking the generated constants from the register map */
+            regData = BMM350_SET_BITS(regData, BMM350_AVG, (uint8_t)avgReg);
+            /* Set PMU command configurations for ODR and performance */
+            rslt = bmm350SetRegs(BMM350_REG_PMU_CMD_AGGR_SET, &regData, 1, &bmm350Sensor);
+            if (rslt == BMM350_OK){
+                /* Set PMU command configurations to update odr and average */
+                regData = BMM350_PMU_CMD_UPD_OAE;
+                /* Set PMU command configuration */
+                rslt = bmm350SetRegs(BMM350_REG_PMU_CMD, &regData, 1, &bmm350Sensor);
+                if (rslt == BMM350_OK){
+                    rslt = bmm350DelayUs(BMM350_UPD_OAE_DELAY, &bmm350Sensor);
+                }
+            }
+            break;
+        default:
+            break;
+    }
+}
 
 float DFRobot_BMM350::getRate(void)
 {

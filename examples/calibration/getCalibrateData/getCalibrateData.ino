@@ -12,8 +12,8 @@
   */
 
 //  =======================================================
-//   请先阅读项目 https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
-//   Please read https://github.com/DFRobot/DFRobot_BMM350/examples/CalibrateMagneticData/CalibrateMagnedticData
+//   请先阅读项目 https://github.com/DFRobot/DFRobot_BMM350/tree/master/examples/calibration
+//   Please read https://github.com/DFRobot/DFRobot_BMM350/tree/master/examples/calibration
 //   包含使用说明、校准步骤。
 //   It contains usage instructions, calibration steps.
 // =======================================================
@@ -40,7 +40,6 @@ void setup() {
    *   eBmm350ForcedModeFast  // To reach ODR = 200Hz is only possible by using FM_ FAST.
    */
   bmm350.setOperationMode(eBmm350NormalMode);
-
   /**
    * Set preset mode, make it easier for users to configure sensor to get geomagnetic data (The default rate for obtaining geomagnetic data is 12.5Hz)
    * presetMode:
@@ -48,6 +47,16 @@ void setup() {
    *   BMM350_PRESETMODE_REGULAR       // Regular mode, get a number of data and take the mean value.
    *   BMM350_PRESETMODE_ENHANCED      // Enhanced mode, get a plenty of data and take the mean value.
    *   BMM350_PRESETMODE_HIGHACCURACY  // High accuracy mode, get a huge number of take and draw the mean value.
+   * rate:
+   *   BMM350_DATA_RATE_1_5625HZ
+   *   BMM350_DATA_RATE_3_125HZ
+   *   BMM350_DATA_RATE_6_25HZ
+   *   BMM350_DATA_RATE_12_5HZ   (default rate)
+   *   BMM350_DATA_RATE_25HZ
+   *   BMM350_DATA_RATE_50HZ
+   *   BMM350_DATA_RATE_100HZ
+   *   BMM350_DATA_RATE_200HZ
+   *   BMM350_DATA_RATE_400HZ
    */
   bmm350.setPresetMode(BMM350_PRESETMODE_HIGHACCURACY,BMM350_DATA_RATE_25HZ);
 

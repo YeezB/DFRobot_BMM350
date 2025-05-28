@@ -61,7 +61,7 @@ $> python3 threshold_interrupt.py
   def self_test(self):
 
   '''!
-    @brief Set sensor operation mode and
+    @brief Set sensor operation mode
     @param modes
     @n BMM350_SUSPEND_MODE      suspend mode: Suspend mode is the default power mode of BMM350 after the chip is powered, Current consumption in suspend mode is minimal, 
                                 so, this mode is useful for periods when data conversion is not needed. Read and write of all registers is possible.
@@ -77,7 +77,20 @@ $> python3 threshold_interrupt.py
   '''
   def get_operation_mode(self):
 
-
+  '''!
+    @brief Set the rate of obtaining geomagnetic data, the higher, the faster (without delay function)
+    @param rate
+    @n BMM350_DATA_RATE_1_5625HZ
+    @n BMM350_DATA_RATE_3_125HZ
+    @n BMM350_DATA_RATE_6_25HZ
+    @n BMM350_DATA_RATE_12_5HZ  (default rate)
+    @n BMM350_DATA_RATE_25HZ
+    @n BMM350_DATA_RATE_50HZ
+    @n BMM350_DATA_RATE_100HZ
+    @n BMM350_DATA_RATE_200HZ
+    @n BMM350_DATA_RATE_400HZ
+  '''
+  def set_rate(self, rates):
 
   '''!
     @brief Get the config data rate, unit: HZ
@@ -92,19 +105,9 @@ $> python3 threshold_interrupt.py
     @n BMM350_PRESETMODE_REGULAR        Regular mode, get a number of data and take the mean value.
     @n BMM350_PRESETMODE_ENHANCED       Enhanced mode, get a plenty of data and take the mean value.
     @n BMM350_PRESETMODE_HIGHACCURACY   High accuracy mode, get a huge number of data and take the mean value.
-    @param rate
-    @n BMM350_DATA_RATE_1_5625HZ
-    @n BMM350_DATA_RATE_3_125HZ
-    @n BMM350_DATA_RATE_6_25HZ
-    @n BMM350_DATA_RATE_12_5HZ  (default rate)
-    @n BMM350_DATA_RATE_25HZ
-    @n BMM350_DATA_RATE_50HZ
-    @n BMM350_DATA_RATE_100HZ
-    @n BMM350_DATA_RATE_200HZ
-    @n BMM350_DATA_RATE_400HZ
 
   '''
-  def set_preset_mode(self, modes,rates):
+  def set_preset_mode(self, modes):
 
   '''!
     @brief Enable the measurement at x-axis, y-axis and z-axis, default to be enabled. After disabling, the geomagnetic data at x, y, and z axis are wrong.
