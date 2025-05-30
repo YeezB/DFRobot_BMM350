@@ -6,7 +6,7 @@ The BMM350 is a low-power and low noise 3-axis digital geomagnetic sensor that p
 
 ![产品效果图](./resources/images/BMM350.png)![产品效果图](./resources/images/BMM350Size.png)
 
-## Product Link（[https://www.dfrobot.com](https://www.dfrobot.com)）
+## Product Link（[https://www.dfrobot.com/product-2874.html](https://www.dfrobot.com/product-2874.html)）
 
 ```yaml
 SKU: SEN0619
